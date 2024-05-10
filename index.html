@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invader</title>
+  <script src="./lib/phaser.js"></script>
+  <script src="./src/Scenes/Invader.js"></script>
+  <script src="./src/main.js"></script>
+  <style>
+    html,
+    body {
+      padding: 0;
+      margin: 0;
+    }
+
+    #phaser-game {
+      position: relative;
+    }
+
+    #score-board {
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #fff;
+      padding: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="phaser-game"></div>
+  <div id="score-board">
+    <div>Score: <span id="score">0</span></div>
+    <div>Level: <span id="level">0</span></div>
+  </div>
+</body>
+
+</html>
