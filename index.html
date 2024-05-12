@@ -21,20 +21,35 @@
 
     #phaser-game {
       position: relative;
+      float: left;
+      margin-right: 16px;
     }
 
-    #score-board {
-      position: absolute;
-      left: 0;
-      top: 0;
+    #description {
+      float: left;
+      padding: 12px;
+      margin-top: 12px;
+      background: #aaa;
       color: #fff;
-      padding: 8px;
+      border-radius: 4px;
     }
   </style>
 </head>
 
 <body>
   <div id="phaser-game"></div>
+  <div id="description">
+    <h3>Game Controls</h3>
+    <p>
+      Space - Shoot
+    </p>
+    <p>
+      Arrow Left - Move Left
+    </p>
+    <p>
+      Arrow Right - Move Right
+    </p>
+  </div>
   <!-- <div id="score-board">
     <div>Score: <span id="score">0</span></div>
     <div>Level: <span id="level">1</span></div>
