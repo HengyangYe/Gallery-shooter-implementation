@@ -149,11 +149,9 @@ class Invader2 extends Background {
     initScoreBoard(this)
   }
   updateScore() {
-    // document.getElementById('score').innerHTML = ScoreBoard.score
     this.score.setText('SCORE: ' + ScoreBoard.score)
   }
   updateLevel() {
-    // document.getElementById('level').innerHTML = ScoreBoard.level
     this.level.setText('LEVEL: ' + ScoreBoard.level)
   }
   update() {
