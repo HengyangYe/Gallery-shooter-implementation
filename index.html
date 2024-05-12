@@ -5,9 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Invader</title>
-  <script src="./lib/phaser.js"></script>
-  <script src="./src/Scenes/Invader.js"></script>
-  <script src="./src/main.js"></script>
+  <script src="./lib/phaser.js" defer></script>
+  <script src="./src/Scenes/Start.js" defer></script>
+  <script src="./src/Scenes/Invader1.js" defer></script>
+  <script src="./src/Scenes/Invader2.js" defer></script>
+  <script src="./src/Scenes/Failed.js" defer></script>
+  <script src="./src/Scenes/Success.js" defer></script>
+  <script src="./src/main.js" defer></script>
   <style>
     html,
     body {
@@ -31,10 +35,10 @@
 
 <body>
   <div id="phaser-game"></div>
-  <div id="score-board">
+  <!-- <div id="score-board">
     <div>Score: <span id="score">0</span></div>
-    <div>Level: <span id="level">0</span></div>
-  </div>
+    <div>Level: <span id="level">1</span></div>
+  </div> -->
 </body>
 
 </html>
