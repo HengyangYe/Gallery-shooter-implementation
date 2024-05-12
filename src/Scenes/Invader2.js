@@ -3,11 +3,11 @@
  *
  * @param {Phaser.Scene} scene
  */
-const initPlayer = (scene) => {
+const initPlayer2 = (scene) => {
   const player = scene.physics.add.sprite(-1000, -1000, 'invaderParts', 'playerShip1_red.png')
   player.setOrigin(0.5, 0)
-  player.displayWidth = player.width / 2
-  player.displayHeight = player.height / 2
+  player.displayWidth = player.width * 2 / 3
+  player.displayHeight = player.height * 2 / 3
   const playerWidth = player.displayWidth
   const playerHeight = player.displayHeight
   player.setPosition((800 - playerWidth) / 2, 600 - playerHeight - 10)
@@ -20,7 +20,7 @@ const initPlayer = (scene) => {
  * @param {Phaser.Scene} scene
  * @param {Phaser.GameObjects.Sprite} player
  */
-const initPlayerLaser = (scene, player) => {
+const initPlayerLaser2 = (scene, player) => {
   const x = player.x
   const y = player.y
   const width = player.displayWidth
@@ -38,15 +38,17 @@ const initPlayerLaser = (scene, player) => {
  * @param {Phaser.Scene} scene
  */
 
-const initEnemies = (scene) => {
+const initEnemies2 = (scene) => {
   const enemies = []
   for (let i = 0; i < 4; i++) {
-    const enemy = scene.physics.add.sprite(100 + (200 * i), 10, 'invaderParts', 'enemyRed1.png')
+    const enemy = scene.physics.add.sprite(100 + (200 * i), 10, 'invaderParts', 'enemyGreen1.png')
     enemy.displayWidth = enemy.width / 2
     enemy.displayHeight = enemy.height / 2
     enemy.setOrigin(0.5, 0)
     enemies.push(enemy)
     enemy.setVelocityY(Phaser.Math.Between(10, 50))
+    const sign = Math.random() > 0.5 ? -1 : 1
+    enemy.setVelocityX(Phaser.Math.Between(50, 100) * sign)
   }
   return enemies
 }
@@ -56,13 +58,13 @@ const initEnemies = (scene) => {
  * @param {Phaser.Scene} scene
  * @param {Phaser.GameObjects.Sprite} enemy
  */
-const initEnemyLaser = (scene, enemy) => {
+const initEnemyLaser2 = (scene, enemy) => {
   const x = enemy.x
   const y = enemy.y
   const height = enemy.displayHeight
   const vy = enemy.body.velocity.y
 
-  const laser = scene.physics.add.sprite(0, 0, 'invaderParts', 'laserRed12.png')
+  const laser = scene.physics.add.sprite(0, 0, 'invaderParts', 'laserGreen12.png')
   laser.setPosition(x, y + height - 10)
   laser.setOrigin(0.5, 0)
 
@@ -70,21 +72,11 @@ const initEnemyLaser = (scene, enemy) => {
   return laser
 }
 
-/**
- *
- * @param {Phaser.Scene} scene
- */
-const initScoreBoard = (scene) => {
-  const container = scene.add.container(10, 10)
-  scene.score = scene.add.text(0, 0, 'SCORE: ' + ScoreBoard.score, { fontSize: 24, color: 'white' })
-  scene.level = scene.add.text(0, 32, 'LEVEL: ' + ScoreBoard.level, { fontSize: 24, color: 'white' })
-  container.add(scene.score)
-  container.add(scene.level)
-}
-class Invader extends Phaser.Scene {
+
+class Invader2 extends Phaser.Scene {
 
   constructor() {
-    super('invader1')
+    super('invader2')
     this.sprites = {
       playerLasers: [],
       enemyLasers: [],
@@ -102,16 +94,16 @@ class Invader extends Phaser.Scene {
     const enemies = this.sprites.enemies
     if (!enemies.length) return
     const enemy = Phaser.Math.RND.pick(enemies)
-    const laser = initEnemyLaser(this, enemy)
+    const laser = initEnemyLaser2(this, enemy)
     this.sprites.enemyLasers.push(laser)
     this.physics.add.overlap(laser, this.sprites.player, this.failed.bind(this), null, this)
   }
 
   failed(laser) {
     laser.disableBody(true, true)
-    PlayerState.health = PlayerState.health - 1
-    if (PlayerState.health > 0) {
+    if (PlayerState.health - 1 > 0) {
       const children = this.health.getAll()
+      PlayerState.health = PlayerState.health - 1
       const child = children.pop()
       this.health.remove(child, true)
       return
@@ -130,9 +122,9 @@ class Invader extends Phaser.Scene {
       right: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT),
       fire: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
     }
-    const player = initPlayer(this)
+    const player = initPlayer2(this)
     this.sprites.player = player
-    const enemies = initEnemies(this)
+    const enemies = initEnemies2(this)
     this.sprites.enemies = enemies
     enemies.forEach((enemy) => {
       this.physics.add.overlap(enemy, player, this.failed.bind(this), null, this)
@@ -151,12 +143,15 @@ class Invader extends Phaser.Scene {
       i++
     }
     this.health = container
+
     initScoreBoard(this)
   }
   updateScore() {
+    // document.getElementById('score').innerHTML = ScoreBoard.score
     this.score.setText('SCORE: ' + ScoreBoard.score)
   }
   updateLevel() {
+    // document.getElementById('level').innerHTML = ScoreBoard.level
     this.level.setText('LEVEL: ' + ScoreBoard.level)
   }
   update() {
@@ -170,7 +165,7 @@ class Invader extends Phaser.Scene {
     }
     if (this.keys.fire.isDown) {
       const initCollide = () => {
-        const lasers = initPlayerLaser(this, this.sprites.player)
+        const lasers = initPlayerLaser2(this, this.sprites.player)
         const enemies = this.sprites.enemies
 
         enemies.slice().forEach((enemy) => {
@@ -185,7 +180,7 @@ class Invader extends Phaser.Scene {
         clearTimeout(this.timer)
       }
       const getScore = (enemy, laser) => {
-        ScoreBoard.score += 10
+        ScoreBoard.score += 20
 
         this.updateScore()
         enemy.disableBody(true, true)
@@ -199,15 +194,37 @@ class Invader extends Phaser.Scene {
 
       this.timer = setTimeout(() => {
         initCollide()
-      }, 200)
+      }, 50)
     }
 
     this.outboxRemoved()
     if (!this.sprites.enemies.length) {
-      this.scene.start('invader2')
+      this.scene.start('success')
       ScoreBoard.level += 1
       this.updateLevel()
     }
+    const bounds = this.physics.world.bounds
+    this.sprites.enemies.slice().forEach((enemy, i) => {
+      const width = enemy.displayWidth
+      const height = enemy.displayHeight
+      const x = enemy.x
+      const y = enemy.y
+
+      if (x - width / 2 < bounds.left || x + width / 2 > bounds.right) {
+        if (!enemy.timer) {
+          enemy.body.velocity.x *= -1
+        }
+        enemy.timer = setTimeout(() => {
+          enemy.body.velocity.x *= -1
+          enemy.timer = null
+        }, 1000)
+      }
+      if (y + height < bounds.top || y > bounds.bottom) {
+        enemy.disableBody(true, true)
+        this.sprites.enemies.splice(i, 1)
+      }
+
+    })
 
   }
   outboxRemoved() {
@@ -227,7 +244,7 @@ class Invader extends Phaser.Scene {
       })
 
     }
-    removeOut(this.sprites.enemies)
+    // removeOut(this.sprites.enemies)
     removeOut(this.sprites.enemyLasers)
     removeOut(this.sprites.playerLasers)
   }
