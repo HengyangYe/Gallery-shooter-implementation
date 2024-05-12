@@ -1,4 +1,26 @@
-class Start extends Phaser.Scene {
+class Background extends Phaser.Scene {
+  preload() {
+
+    this.load.image('bg', './assets/images/starBackground.png')
+  }
+  create() {
+    const background = this.add.tileSprite(0, 0, 800, 600, 'bg')
+
+    background.setOrigin(0)
+    background.setTileScale(1, 1)
+
+    const columns = Math.ceil(game.config.width / background.width)
+    const rows = Math.ceil(game.config.height / background.height)
+
+    background.setTileScale(columns, rows)
+    background.setDepth(-1)
+    this.bg = background
+  }
+  update() {
+    this.bg.tilePositionY += 1
+  }
+}
+class Start extends Background {
   constructor() {
     super('start')
   }
@@ -22,5 +44,10 @@ class Start extends Phaser.Scene {
     buttonBackground.on('pointerdown', () => {
       this.scene.start('invader1')
     })
+    super.create()
   }
+  update() {
+    super.update()
+  }
+
 }

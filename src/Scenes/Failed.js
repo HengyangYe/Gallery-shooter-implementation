@@ -1,8 +1,9 @@
-class Failed extends Phaser.Scene {
+class Failed extends Background {
   constructor() {
     super('failed')
   }
   create() {
+    super.create()
     const text = this.add.text(400, 250, 'FAILED', { fontSize: 30 })
     text.setOrigin(0.5)
     let highestScore = parseInt(localStorage.getItem('highest')) || 0

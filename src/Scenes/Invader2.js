@@ -73,7 +73,7 @@ const initEnemyLaser2 = (scene, enemy) => {
 }
 
 
-class Invader2 extends Phaser.Scene {
+class Invader2 extends Background {
 
   constructor() {
     super('invader2')
@@ -115,8 +115,10 @@ class Invader2 extends Phaser.Scene {
   preload() {
     this.load.setPath('./assets/images/')
     this.load.atlasXML('invaderParts', 'sheet.png', 'sheet.xml')
+    super.preload()
   }
   create() {
+    super.create()
     this.keys = {
       left: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT),
       right: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT),
@@ -155,12 +157,13 @@ class Invader2 extends Phaser.Scene {
     this.level.setText('LEVEL: ' + ScoreBoard.level)
   }
   update() {
+    super.update()
     if (this.keys.left.isDown) {
-      const x = this.sprites.player.x - 1
+      const x = this.sprites.player.x - 2
       this.sprites.player.setX(x)
     }
     if (this.keys.right.isDown) {
-      const x = this.sprites.player.x + 1
+      const x = this.sprites.player.x + 2
       this.sprites.player.setX(x)
     }
     if (this.keys.fire.isDown) {

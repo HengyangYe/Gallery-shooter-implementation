@@ -1,8 +1,9 @@
-class Success extends Phaser.Scene {
+class Success extends Background {
   constructor() {
     super('success')
   }
   create() {
+    super.create()
     this.add.text(400, 250, 'SUCCESS', { fontSize: 30, color: 'white' }).setOrigin(0.5)
 
     let highestScore = parseInt(localStorage.getItem('highest')) || 0
