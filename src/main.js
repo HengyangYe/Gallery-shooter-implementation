@@ -1,6 +1,14 @@
 // main.js
 "use strict";
 
+const ScoreBoard = {
+  level: 1,
+  score: 0
+}
+
+const PlayerState = {
+  health: 3
+}
 let config = {
   parent: 'phaser-game',
   type: Phaser.CANVAS,
@@ -15,7 +23,7 @@ let config = {
       gravity: { y: 0 }
     }
   },
-  scene: [Invader], // Replace 'Monster' with 'D1' to reference your scene
+  scene: [Start, Invader, Invader2, Failed, Success], // Replace 'Monster' with 'D1' to reference your scene
   fps: {
     forceSetTimeOut: true,
     target: 120
