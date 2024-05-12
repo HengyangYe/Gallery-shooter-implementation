@@ -23,7 +23,7 @@ let config = {
       gravity: { y: 0 }
     }
   },
-  scene: [Start, Invader, Invader2, Failed, Success], // Replace 'Monster' with 'D1' to reference your scene
+  scene: [Start, Invader, Invader2, Failed, Success],
   fps: {
     forceSetTimeOut: true,
     target: 120
